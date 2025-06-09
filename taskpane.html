@@ -2,13 +2,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Generador de Documento Reiterativo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Tailwind CSS versión estable -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Font Awesome versión estable -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" />
   <style>
-    /* Additional custom styles */
+    /* Estilos personalizados adicionales */
     .highlight-bg {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
@@ -18,8 +20,8 @@
     }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen p-4 md:p-6">
-  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+<body class="bg-gray-50 p-4 md:p-6">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md">
     <!-- Header -->
     <div class="highlight-bg p-6 text-white">
       <div class="flex items-center">
@@ -30,54 +32,44 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="p-6 space-y-8">
-      <!-- Step 1: Assign Field -->
+
+      <!-- Paso 1: Asignar Campo -->
       <div class="space-y-4">
         <div class="flex items-center">
-          <div class="flex items-center justify-center bg-blue-500 text-white rounded-full w-8 h-8 font-bold mr-3">1</div>
+          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
           <h2 class="text-xl font-semibold text-gray-800">Asignar Campo</h2>
         </div>
-        
-        <div class="space-y-3">
-          <div class="flex flex-col md:flex-row gap-3">
-            <input
-              type="text"
-              id="campoNombre"
-              placeholder="Ej. Nombre, Fecha, Dirección..."
-              class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-            >
-            
-            <div class="flex gap-2 justify-end">
-              <button id="btnAsignar" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg flex items-center gap-2 transition">
-                <i class="fas fa-plus"></i>
-                Asignar campo
-              </button>
-              
-              <button id="btnLimpiar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg flex items-center gap-2 transition">
-                <i class="fas fa-broom"></i>
-                Limpiar
-              </button>
-            </div>
-          </div>
+        <div class="flex flex-col md:flex-row md:items-center gap-3">
+          <input
+            type="text"
+            id="campoNombre"
+            placeholder="Ej. Nombre, Fecha, Dirección..."
+            class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
+          />
+          <button id="btnAsignar" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
+            <i class="fas fa-plus"></i> Asignar
+          </button>
+          <button id="btnLimpiar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg flex items-center gap-2">
+            <i class="fas fa-broom"></i> Limpiar
+          </button>
         </div>
-        
-        <div class="tooltip relative inline-block">
+        <div class="relative inline-block tooltip">
           <i class="fas fa-info-circle text-blue-400 cursor-pointer"></i>
-          <div class="tooltip-text invisible opacity-0 absolute z-10 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm text-gray-600 left-full ml-2 transition-all duration-200">
-            Selecciona texto en tu documento y asígnalo como campo para ser dinámico. Cada vez que generes nuevos documentos podrás cambiar estos valores.
+          <div class="tooltip-text invisible opacity-0 absolute z-10 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm text-gray-600 sm:left-full left-0 sm:ml-2 transition-all duration-200">
+            Selecciona texto en tu documento y asígnalo como campo dinámico.
           </div>
         </div>
       </div>
-      
-      <!-- Step 2: Assigned Fields -->
+
+      <!-- Paso 2: Campos Asignados -->
       <div class="space-y-4">
         <div class="flex items-center">
-          <div class="flex items-center justify-center bg-green-500 text-white rounded-full w-8 h-8 font-bold mr-3">2</div>
+          <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
           <h2 class="text-xl font-semibold text-gray-800">Campos Asignados</h2>
         </div>
-        
         <div id="listaCampos" class="bg-gray-50 rounded-lg p-4 min-h-16">
           <div class="text-gray-400 italic flex items-center gap-2">
             <i class="fas fa-exclamation-circle"></i>
@@ -85,69 +77,38 @@
           </div>
         </div>
       </div>
-      
-      <!-- Step 3: Enter Values -->
+
+      <!-- Paso 3: Ingresar Valores -->
       <div class="space-y-4">
         <div class="flex items-center">
-          <div class="flex items-center justify-center bg-purple-500 text-white rounded-full w-8 h-8 font-bold mr-3">3</div>
+          <div class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">3</div>
           <h2 class="text-xl font-semibold text-gray-800">Ingresar Valores</h2>
         </div>
-        
         <div id="formularioDatos" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-blue-50 rounded-lg p-4 border border-blue-200 flex flex-col items-center justify-center">
             <i class="fas fa-magic text-blue-400 text-2xl mb-2"></i>
-            <p class="text-center text-blue-700">Asigna campos en el paso 1 para ver los controles aquí</p>
+            <p class="text-center text-blue-700">Asigna campos para ver los controles aquí</p>
           </div>
         </div>
       </div>
-      
-      <!-- Step 4: Generate Document -->
+
+      <!-- Paso 4: Generar Documentos -->
       <div class="space-y-4">
         <div class="flex items-center">
-          <div class="flex items-center justify-center bg-indigo-500 text-white rounded-full w-8 h-8 font-bold mr-3">4</div>
+          <div class="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">4</div>
           <h2 class="text-xl font-semibold text-gray-800">Generar Documentos</h2>
         </div>
-        
-        <button id="btnGenerar" class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-lg shadow-md transition flex items-center justify-center gap-2">
-          <i class="fas fa-file-export"></i>
-          Generar Documentos
+        <button id="btnGenerar" class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-lg shadow-md flex items-center justify-center gap-2">
+          <i class="fas fa-file-export"></i> Generar
         </button>
       </div>
+
     </div>
-    
+
     <!-- Footer -->
     <div class="bg-gray-100 p-4 text-center text-gray-600 text-sm">
       <p>© 2023 Generador de Documentos | <span class="text-blue-500">v2.0</span></p>
     </div>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Tooltips functionality
-      const tooltipTriggers = document.querySelectorAll('.tooltip');
-      tooltipTriggers.forEach(trigger => {
-        const tooltip = trigger.querySelector('.tooltip-text');
-        
-        trigger.addEventListener('mouseenter', () => {
-          tooltip.classList.remove('invisible', 'opacity-0');
-        });
-        
-        trigger.addEventListener('mouseleave', () => {
-          tooltip.classList.add('invisible', 'opacity-0');
-        });
-      });
-      
-      // Animation for empty state lists
-      const emptyState = document.querySelector('#listaCampos > div');
-      if (emptyState) {
-        emptyState.classList.add('animate-pulse');
-      }
-    });
-  </script>
-</body>
-</html>
-
-  <h2>4. Reemplazar en Documento</h2>
-  <button id="btnGenerar">Reemplazar en documento</button>
 </body>
 </html>
