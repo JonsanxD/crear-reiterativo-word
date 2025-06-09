@@ -4,111 +4,340 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generador de Documento Reiterativo</title>
-  <!-- Tailwind CSS versión estable -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
-  <!-- Font Awesome versión estable -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" />
-  <style>
-    /* Estilos personalizados adicionales */
-    .highlight-bg {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  <title>Generador DocuGen</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Variables de color personalizadas -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            electric: {
+              100: '#e6f7ff',
+              500: '#4f8cff',
+              600: '#3c70ff',
+            },
+            neon: '#5dff91',
+            coral: '#ff7b6b',
+            butter: '#ffde59',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
     }
-    .tooltip:hover .tooltip-text {
-      visibility: visible;
-      opacity: 1;
+  </script>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts - Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos personalizados */
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 15px rgba(79, 140, 255, 0.6);
+    }
+    .gradient-text {
+      background: linear-gradient(45deg, #4f8cff, #5dff91);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .floating-label {
+      transition: all 0.3s ease;
+    }
+    input:focus ~ .floating-label,
+    input:not(:placeholder-shown) ~ .floating-label {
+      transform: translateY(-22px) scale(0.85);
+      color: #4f8cff;
+    }
+    .badge-3d {
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
   </style>
 </head>
-<body class="bg-gray-50 p-4 md:p-6">
-  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md">
-    <!-- Header -->
-    <div class="highlight-bg p-6 text-white">
-      <div class="flex items-center">
-        <i class="fas fa-file-alt text-3xl mr-3"></i>
+<body class="bg-gradient-to-br from-electric-100 to-gray-50 min-h-screen p-4 md:p-8">
+  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <!-- Header con diseño moderno -->
+    <div class="relative bg-gradient-to-r from-electric-500 to-electric-600 p-6 text-white">
+      <div class="absolute -bottom-5 -right-5 opacity-20">
+        <i class="fas fa-file-alt text-[200px] text-white"></i>
+      </div>
+      <div class="relative z-10 flex items-start">
+        <div class="bg-white text-electric-500 rounded-xl p-3 mr-4 shadow-md">
+          <i class="fas fa-magic text-3xl"></i>
+        </div>
         <div>
-          <h1 class="text-2xl md:text-3xl font-bold">Generador de Documento Reiterativo</h1>
-          <p class="text-blue-100">Automatiza la creación de documentos con plantillas personalizadas</p>
+          <h1 class="text-3xl md:text-4xl font-bold mb-1">Docu<span class="gradient-text">Gen</span></h1>
+          <p class="text-electric-100">¡Automatiza documentos como un pro! 🚀</p>
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="p-6 space-y-8">
-
       <!-- Paso 1: Asignar Campo -->
-      <div class="space-y-4">
+      <div class="space-y-4 card-hover bg-white rounded-xl p-5 shadow-md">
         <div class="flex items-center">
-          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
-          <h2 class="text-xl font-semibold text-gray-800">Asignar Campo</h2>
+          <div class="bg-coral text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 badge-3d animate-pulse">1</div>
+          <h2 class="text-xl font-bold text-gray-800">Define tu campo</h2>
         </div>
-        <div class="flex flex-col md:flex-row md:items-center gap-3">
+        
+        <div class="relative mt-6">
           <input
             type="text"
             id="campoNombre"
-            placeholder="Ej. Nombre, Fecha, Dirección..."
-            class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
+            placeholder=" "
+            class="peer w-full px-4 py-3 border-b-2 border-gray-300 focus:border-electric-500 outline-none transition-all"
           />
-          <button id="btnAsignar" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
-            <i class="fas fa-plus"></i> Asignar
+          <label class="floating-label absolute left-4 top-3.5 text-gray-400 pointer-events-none peer-focus:text-electric-500">
+            📌 Nombre del campo (ej: Nombre, Fecha...)
+          </label>
+        </div>
+        
+        <div class="flex flex-wrap gap-3 mt-4">
+          <button id="btnAsignar" class="btn-glow px-4 py-2 bg-electric-500 hover:bg-electric-600 text-white rounded-xl flex items-center gap-2 font-medium transition-all">
+            <i class="fas fa-plus-circle"></i> Asignar
           </button>
-          <button id="btnLimpiar" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg flex items-center gap-2">
+          <button id="btnLimpiar" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl flex items-center gap-2 font-medium transition-all">
             <i class="fas fa-broom"></i> Limpiar
           </button>
-        </div>
-        <div class="relative inline-block tooltip">
-          <i class="fas fa-info-circle text-blue-400 cursor-pointer"></i>
-          <div class="tooltip-text invisible opacity-0 absolute z-10 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm text-gray-600 sm:left-full left-0 sm:ml-2 transition-all duration-200">
-            Selecciona texto en tu documento y asígnalo como campo dinámico.
-          </div>
+          <button id="btnEjemplo" class="px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-xl flex items-center gap-2 font-medium transition-all">
+            <i class="fas fa-lightbulb"></i> Ejemplo
+          </button>
         </div>
       </div>
 
       <!-- Paso 2: Campos Asignados -->
-      <div class="space-y-4">
+      <div class="space-y-4 card-hover bg-white rounded-xl p-5 shadow-md">
         <div class="flex items-center">
-          <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
-          <h2 class="text-xl font-semibold text-gray-800">Campos Asignados</h2>
+          <div class="bg-neon text-gray-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 badge-3d">2</div>
+          <h2 class="text-xl font-bold text-gray-800">Tus Campos Definidos</h2>
         </div>
-        <div id="listaCampos" class="bg-gray-50 rounded-lg p-4 min-h-16">
-          <div class="text-gray-400 italic flex items-center gap-2">
-            <i class="fas fa-exclamation-circle"></i>
-            No hay campos asignados todavía
+        
+        <div id="listaCampos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+          <div class="text-center py-6 px-4 rounded-xl bg-gray-50 text-gray-400 flex flex-col items-center justify-center border-2 border-dashed border-gray-200">
+            <i class="fas fa-exclamation-circle text-lg mb-2"></i>
+            <span class="text-sm">Aún no has definido campos</span>
           </div>
         </div>
       </div>
 
       <!-- Paso 3: Ingresar Valores -->
-      <div class="space-y-4">
+      <div class="space-y-4 card-hover bg-white rounded-xl p-5 shadow-md">
         <div class="flex items-center">
-          <div class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">3</div>
-          <h2 class="text-xl font-semibold text-gray-800">Ingresar Valores</h2>
+          <div class="bg-butter text-gray-800 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 badge-3d">3</div>
+          <h2 class="text-xl font-bold text-gray-800">Completa los Valores</h2>
         </div>
-        <div id="formularioDatos" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-blue-50 rounded-lg p-4 border border-blue-200 flex flex-col items-center justify-center">
-            <i class="fas fa-magic text-blue-400 text-2xl mb-2"></i>
-            <p class="text-center text-blue-700">Asigna campos para ver los controles aquí</p>
+        
+        <div id="formularioDatos" class="mt-4">
+          <div class="text-center py-10 px-4 rounded-xl bg-gradient-to-br from-electric-50 to-white text-blue-400 flex flex-col items-center justify-center border-2 border-dashed border-electric-200">
+            <i class="fas fa-magic text-2xl mb-3"></i>
+            <p class="text-center font-medium">¡Asigna campos arriba para ver los controles aquí!</p>
+            <p class="text-sm text-gray-500 mt-2">Puedes reutilizar estos valores cuantas veces necesites</p>
           </div>
         </div>
       </div>
 
       <!-- Paso 4: Generar Documentos -->
-      <div class="space-y-4">
+      <div class="space-y-4 card-hover bg-white rounded-xl p-5 shadow-md">
         <div class="flex items-center">
-          <div class="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">4</div>
-          <h2 class="text-xl font-semibold text-gray-800">Generar Documentos</h2>
+          <div class="bg-electric-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 badge-3d animate-pulse">4</div>
+          <h2 class="text-xl font-bold text-gray-800">¡Listo para Generar!</h2>
         </div>
-        <button id="btnGenerar" class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-lg shadow-md flex items-center justify-center gap-2">
-          <i class="fas fa-file-export"></i> Generar
-        </button>
+        
+        <div class="mt-4 flex flex-wrap gap-4">
+          <button id="btnGenerar" class="btn-glow px-6 py-3 bg-gradient-to-r from-electric-500 to-electric-600 hover:from-electric-600 hover:to-electric-700 text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all">
+            <i class="fas fa-paper-plane"></i> Generar Documentos
+          </button>
+          <button id="btnExportar" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl flex items-center justify-center gap-2 transition-all">
+            <i class="fas fa-download"></i> Exportar Plantilla
+          </button>
+        </div>
       </div>
-
     </div>
 
-    <!-- Footer -->
-    <div class="bg-gray-100 p-4 text-center text-gray-600 text-sm">
-      <p>© 2023 Generador de Documentos | <span class="text-blue-500">v2.0</span></p>
+    <!-- Footer con animación -->
+    <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-4 text-center">
+      <div class="flex items-center justify-center gap-2">
+        <p class="text-gray-600 text-sm">DocuGen v3.0 - </p>
+        <div class="flex gap-3">
+          <a href="#" class="text-gray-500 hover:text-electric-500 transition-colors">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-electric-500 transition-colors">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-electric-500 transition-colors">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Simulación de funcionalidad
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnAsignar = document.getElementById('btnAsignar');
+      const btnLimpiar = document.getElementById('btnLimpiar');
+      const btnEjemplo = document.getElementById('btnEjemplo');
+      const btnGenerar = document.getElementById('btnGenerar');
+      const btnExportar = document.getElementById('btnExportar');
+      const campoNombre = document.getElementById('campoNombre');
+      const listaCampos = document.getElementById('listaCampos');
+      const formularioDatos = document.getElementById('formularioDatos');
+      
+      let campos = [];
+      
+      // Agregar campo
+      btnAsignar.addEventListener('click', function() {
+        const nombre = campoNombre.value.trim();
+        if(nombre && !campos.includes(nombre)) {
+          campos.push(nombre);
+          actualizarVista();
+          campoNombre.value = '';
+          
+          // Efecto visual
+          this.classList.add('animate-pulse');
+          setTimeout(() => this.classList.remove('animate-pulse'), 1000);
+        }
+      });
+      
+      // Limpiar todo
+      btnLimpiar.addEventListener('click', function() {
+        campos = [];
+        actualizarVista();
+        
+        // Efecto de limpieza
+        listaCampos.classList.add('animate-pulse');
+        setTimeout(() => listaCampos.classList.remove('animate-pulse'), 1000);
+      });
+      
+      // Cargar ejemplo
+      btnEjemplo.addEventListener('click', function() {
+        campos = ['Nombre', 'Correo', 'Teléfono', 'Dirección'];
+        actualizarVista();
+        
+        // Efecto
+        this.innerHTML = '<i class="fas fa-check"></i> ¡Ejemplo cargado!';
+        this.classList.add('bg-green-100', 'text-green-700');
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-lightbulb"></i> Ejemplo';
+          this.classList.remove('bg-green-100', 'text-green-700');
+        }, 2000);
+      });
+      
+      // Generar documentos
+      btnGenerar.addEventListener('click', function() {
+        if(campos.length === 0) {
+          alert('💡 Primero debes definir algunos campos');
+          return;
+        }
+        
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-check"></i> ¡Documentos listos!';
+          setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-paper-plane"></i> Generar Documentos';
+          }, 1500);
+        }, 1500);
+      });
+      
+      // Botón exportar
+      btnExportar.addEventListener('click', function() {
+        if(campos.length === 0) {
+          alert('⚠️ No hay nada que exportar');
+          return;
+        }
+        
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exportando...';
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-check"></i> ¡Plantilla exportada!';
+          setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-download"></i> Exportar Plantilla';
+          }, 1500);
+        }, 1500);
+      });
+      
+      // Actualizar la vista
+      function actualizarVista() {
+        // Actualizar lista de campos
+        if(campos.length === 0) {
+          listaCampos.innerHTML = `
+            <div class="col-span-full text-center py-6 px-4 rounded-xl bg-gray-50 text-gray-400 flex flex-col items-center justify-center border-2 border-dashed border-gray-200">
+              <i class="fas fa-exclamation-circle text-lg mb-2"></i>
+              <span class="text-sm">Aún no has definido campos</span>
+            </div>
+          `;
+        } else {
+          listaCampos.innerHTML = campos.map(campo => `
+            <div class="bg-neon/10 rounded-lg p-3 border border-neon/30 flex items-center justify-between">
+              <span class="font-medium">${campo}</span>
+              <button class="text-gray-500 hover:text-red-500 transition-colors">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `).join('');
+          
+          // Agregar eventos a los botones de eliminar
+          document.querySelectorAll('#listaCampos button').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+              campos.splice(index, 1);
+              actualizarVista();
+            });
+          });
+        }
+        
+        // Actualizar formulario de datos
+        if(campos.length === 0) {
+          formularioDatos.innerHTML = `
+            <div class="text-center py-10 px-4 rounded-xl bg-gradient-to-br from-electric-50 to-white text-blue-400 flex flex-col items-center justify-center border-2 border-dashed border-electric-200">
+              <i class="fas fa-magic text-2xl mb-3"></i>
+              <p class="text-center font-medium">¡Asigna campos arriba para ver los controles aquí!</p>
+              <p class="text-sm text-gray-500 mt-2">Puedes reutilizar estos valores cuantas veces necesites</p>
+            </div>
+          `;
+        } else {
+          formularioDatos.innerHTML = `
+            <div class="bg-gray-50 rounded-xl p-4">
+              <h3 class="font-bold text-gray-700 mb-3">Ingresa los valores:</h3>
+              <div class="space-y-3">
+                ${campos.map(campo => `
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder=" "
+                      class="peer w-full px-4 py-2 border-b-2 border-gray-300 focus:border-electric-500 outline-none transition-all bg-transparent"
+                      id="dato_${campo.toLowerCase().replace(' ', '_')}"
+                    />
+                    <label class="floating-label absolute left-4 top-2 text-gray-400 pointer-events-none peer-focus:text-electric-500 text-sm">
+                      ✏️ ${campo}
+                    </label>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+      }
+    });
+  </script>
 </body>
 </html>
