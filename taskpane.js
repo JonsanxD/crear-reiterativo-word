@@ -13,7 +13,7 @@ function actualizarUI() {
 
   const campos = Object.keys(camposAsignados);
   if (campos.length === 0) {
-    lista.textContent = "No hay campos asignados.";
+    lista.innerHTML = `<div class="text-gray-400 italic flex items-center gap-2"><i class="fas fa-exclamation-circle"></i> No hay campos asignados todavía</div>`;
     return;
   }
 
@@ -40,9 +40,7 @@ function actualizarUI() {
 
 async function asignarCampo() {
   const nombreCampo = document.getElementById("campoNombre").value.trim();
-  if (!nombreCampo) {
-    return showAlert("Debes ingresar un nombre de campo.");
-  }
+  if (!nombreCampo) return showAlert("Debes ingresar un nombre de campo.");
 
   await Word.run(async (context) => {
     const selection = context.document.getSelection();
@@ -50,9 +48,7 @@ async function asignarCampo() {
     await context.sync();
 
     const texto = selection.text.trim();
-    if (!texto) {
-      return showAlert("Debes seleccionar texto en el documento.");
-    }
+    if (!texto) return showAlert("Debes seleccionar texto en el documento.");
 
     camposAsignados[nombreCampo] = texto;
     document.getElementById("campoNombre").value = "";
@@ -64,15 +60,13 @@ async function asignarCampo() {
 async function generarDocumento() {
   const datos = {};
   Object.keys(camposAsignados).forEach(campo => {
-    const valor = document.getElementById(`input_${campo}`).value;
-    datos[campo] = valor;
+    datos[campo] = document.getElementById(`input_${campo}`).value;
   });
 
   await Word.run(async (context) => {
     const body = context.document.body;
     const searchResultsMap = {};
 
-    // Preparar búsquedas
     for (const [campo, valorOriginal] of Object.entries(camposAsignados)) {
       if (!valorOriginal) continue;
       const results = body.search(valorOriginal, { matchCase: false });
@@ -82,7 +76,6 @@ async function generarDocumento() {
 
     await context.sync();
 
-    // Reemplazar valores
     for (const [campo, results] of Object.entries(searchResultsMap)) {
       const nuevoValor = datos[campo] || "";
       results.items.forEach(item => item.insertText(nuevoValor, "Replace"));
@@ -94,16 +87,13 @@ async function generarDocumento() {
 }
 
 function limpiarCampos() {
-  for (const campo in camposAsignados) delete camposAsignados[campo];
+  Object.keys(camposAsignados).forEach(c => delete camposAsignados[c]);
   actualizarUI();
 }
 
-// Event listeners
-
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnAsignar").addEventListener("click", asignarCampo);
-  document.getElementById("btnGenerar").addEventListener("click", generarDocumento);
   document.getElementById("btnLimpiar").addEventListener("click", limpiarCampos);
+  document.getElementById("btnGenerar").addEventListener("click", generarDocumento);
   actualizarUI();
 });
-
