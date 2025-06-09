@@ -1,21 +1,31 @@
+<!-- Archivo: taskpane.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
   <title>Generador de Documento Reiterativo</title>
   <script src="taskpane.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; }
+    h2 { margin-top: 20px; }
+    #listaCampos li { margin-bottom: 5px; }
+    .campo-input { margin-bottom: 10px; }
+    button { margin-right: 10px; margin-top: 5px; }
+  </style>
 </head>
 <body>
-  <h2>Asignar Campo</h2>
+  <h2>1. Asignar Campo</h2>
   <input type="text" id="campoNombre" placeholder="Ej. Nombre, Fecha..." />
   <button id="btnAsignar">Asignar campo al texto seleccionado</button>
+  <button id="btnLimpiar">Limpiar campos</button>
 
-  <h2>Reemplazar Campos</h2>
-  <textarea id="datosJson" rows="6" cols="40" placeholder='{
-  "Nombre": "Carlos",
-  "Fecha": "09/06/2025"
-}'></textarea>
-  <br />
+  <h2>2. Campos Asignados</h2>
+  <ul id="listaCampos">No hay campos asignados.</ul>
+
+  <h2>3. Ingresar Valores</h2>
+  <form id="formularioDatos"></form>
+
+  <h2>4. Reemplazar en Documento</h2>
   <button id="btnGenerar">Reemplazar en documento</button>
 </body>
 </html>
