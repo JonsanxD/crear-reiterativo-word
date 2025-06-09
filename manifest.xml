@@ -1,9 +1,10 @@
+<!-- Archivo: manifest.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:type="TaskPaneApp">
   <Id>e4c4b1c3-d4d6-4f95-a3b5-e15e8cb3a0f3</Id>
-  <Version>1.0.1.0</Version>
+  <Version>1.0.2.0</Version>
   <ProviderName>TuNombre</ProviderName>
   <DefaultLocale>es-PE</DefaultLocale>
   <DisplayName DefaultValue="Generador Reiterativo" />
