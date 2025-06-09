@@ -16,7 +16,7 @@
   </Hosts>
 
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://tuusuario.github.io/crear-reiterativo-word/taskpane.html" />
+    <SourceLocation DefaultValue="https://JonsanxD/crear-reiterativo-word/taskpane.html" />
   </DefaultSettings>
 
   <Permissions>ReadWriteDocument</Permissions>
